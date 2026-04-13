@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  sensor:
+    build: 
+      context: ./sensor
+    networks:
+      
+secure_net
+  volumes:
+./data/pcaps:/app/pcaps:ro
+depends_on:
+aggregator
+
+  aggregator:
+    build:
+      context: ./aggregator
+    ports:
+      
+"8443:8443"
+  networks:
+secure_net
+volumes:
+./data/logs:/app/logs
+./artifacts/release:/app/artifacts
+
+networks:
+  secure_net:
+    driver: bridge
+    internal: true
