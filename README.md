@@ -1,15 +1,24 @@
-SecureFlow: Hardened Network Forensics
-SecureFlow is a reproducible, containerized network anomaly detector. It parses PCAPs and live socket traffic, securely transmitting alerts via mTLS to a centralized, tamper-evident logging server.
+\# SecureFlow: Hardened Distributed Network Forensics \& Anomaly Detector
 
-Setup & Execution
-Clone this repository.
-Run make bootstrap to initialize directories and generate development certificates.
-Run make up to build and start the sensor and aggregator nodes.
-Run make demo to execute the vertical slice and view the output.
-Run make clean to spin down the environment and remove generated artifacts.
 
-Project Structure
-/sensor - C/Python packet capture and analysis logic.
-/aggregator - mTLS server and secure log storage.
-/data - Volume mounts for input PCAPs and output logs.
-/artifacts/release - Security evidence, generated CSVs, and charts.
+
+\## Architecture \& Overview
+
+SecureFlow is a containerized Intrusion Detection System (IDS). It is divided into two distinct subnets:
+
+\* \*\*Subnet A (Isolated Sensor Network):\*\* Runs a C-based static packet analyzer and a Python mTLS transmitter. This network has no outbound internet access (`internal: true`) to prevent malware propagation.
+
+\* \*\*Subnet B (Management Network):\*\* Runs a Python Log Aggregator that receives alerts over mTLS, cryptographically hashes them, and writes them to a shared volume.
+
+
+
+\## Runbook
+
+To build, deploy, and demonstrate the vertical slice, simply run:
+
+```bash
+
+./generate\_certs.sh
+
+make up \&\& make demo
+

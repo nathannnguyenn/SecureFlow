@@ -1,22 +1,17 @@
-.PHONY: bootstrap up demo clean test
-
-bootstrap:
-    @echo "Bootstrapping project environment..."
-    mkdir -p data/pcaps data/logs artifacts/release certs
-    @echo "Generating development certificates for mTLS..."
-    openssl req -newkey rsa:2048 -nodes -keyout certs/dev.key -x509 -days 365 -out certs/dev.crt -subj "/CN=SecureFlow"
+.PHONY: up demo test down
 
 up:
-    docker-compose up --build -d
+	# Use Docker to generate certs to avoid Windows line-ending errors on a fresh clone
+	docker run --rm -v "$${PWD}:/app" -w /app ubuntu bash -c "apt-get update && apt-get install -y openssl dos2unix && dos2unix generate_certs.sh && bash generate_certs.sh"
+	docker-compose up -d --build
 
 demo:
-    @echo "Running end-to-end demo..."
-    docker-compose exec sensor python3 run_analysis.py
-    @echo "Check artifacts/release/ for CSV metrics and tamper-evident logs."
-
-clean:
-    docker-compose down -v
-    rm -rf certs/* data/logs/* artifacts/release/*
+	@echo "Running Vertical Slice: Injecting synthetic anomaly..."
+	docker exec secureflow-sensor-1 python3 -c "import socket; sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM); sock.connect(('127.0.0.1', 80))"
+	@echo "Demo complete. Check artifacts/release/detection_metrics.json for logs and JSON."
 
 test:
-    @echo "Running minimal alpha and robust beta tests..."
+	pytest tests/ --cov=src/ --cov-report=term-missing
+
+down:
+	docker-compose down -v

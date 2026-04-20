@@ -1,30 +1,28 @@
 version: '3.8'
 
 services:
-  sensor:
-    build: 
-      context: ./sensor
-    networks:
-      
-secure_net
-  volumes:
-./data/pcaps:/app/pcaps:ro
-depends_on:
-aggregator
-
   aggregator:
-    build:
-      context: ./aggregator
+    build: ./src/aggregator
+    networks:
+      - management_network
+    volumes:
+      - ./artifacts/release:/logs
     ports:
-      
-"8443:8443"
-  networks:
-secure_net
-volumes:
-./data/logs:/app/logs
-./artifacts/release:/app/artifacts
+      - "8443:8443"
+
+  sensor:
+    build: ./src/sensor
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    networks:
+      - sensor_network
+      - management_network
+    depends_on:
+      - aggregator
 
 networks:
-  secure_net:
-    driver: bridge
+  sensor_network:
     internal: true
+  management_network:
+    driver: bridge
