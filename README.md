@@ -1,3 +1,6 @@
+[![SecureFlow CI Pipeline](https://github.com/nathannnguyenn/SecureFlow/actions/workflows/ci.yml/badge.svg)](https://github.com/nathannnguyenn/SecureFlow/actions/workflows/ci.yml)
+
+
 \# SecureFlow: Hardened Distributed Network Forensics \& Anomaly Detector
 
 
