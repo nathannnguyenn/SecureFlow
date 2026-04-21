@@ -7,9 +7,9 @@ up:
 
 demo:
 	@echo "Running Vertical Slice: Injecting synthetic anomaly..."
-	docker exec secureflow-sensor-1 python3 -c "import socket; sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM); sock.connect(('127.0.0.1', 80))"
+	docker exec secureflow-sensor-1 nmap -sN -p 80 -Pn -n aggregator
 	@echo "Demo complete. Check artifacts/release/detection_metrics.json for logs and JSON."
-
+	
 test:
 	pytest tests/ --cov=src/ --cov-report=term-missing
 

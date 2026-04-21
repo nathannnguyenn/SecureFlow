@@ -22,19 +22,27 @@ def start_mtls_server():
         sock.bind((HOST, PORT))
         sock.listen(5)
         with context.wrap_socket(sock, server_side=True) as ssock:
-            print("Aggregator listening on port 8443...")
-            conn, addr = ssock.accept()
-            with conn:
-                data = conn.recv(1024)
-                if data:
-                    payload = data.decode()
-                    log_hash = hash_log(payload)
-                    
-                    # Output JSON metric for grading rubric
-                    metric = {"source": addr[0], "alert": payload, "hash": log_hash}
-                    with open('/logs/detection_metrics.json', 'a') as f:
-                        json.dump(metric, f)
-                        f.write('\n')
+            print("Aggregator listening on port 8443...", flush=True)
+            
+            # Keep the server alive forever to accept multiple connections
+            while True: 
+                conn, addr = ssock.accept()
+                with conn:
+                    # Keep reading data as long as the sensor is connected
+                    while True: 
+                        data = conn.recv(1024)
+                        if not data:
+                            break # Sensor disconnected, wait for a new connection
+                        
+                        payload = data.decode().strip()
+                        if payload:
+                            log_hash = hash_log(payload)
+                            
+                            # Output JSON metric for grading rubric
+                            metric = {"source": addr[0], "alert": payload, "hash": log_hash}
+                            with open('/logs/detection_metrics.json', 'a') as f:
+                                json.dump(metric, f)
+                                f.write('\n')
 
 if __name__ == "__main__":
     start_mtls_server()

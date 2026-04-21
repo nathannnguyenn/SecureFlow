@@ -1,9 +1,10 @@
 FROM python:3.10-slim
 
-# Install dependencies for C compilation and packet sniffing
+# Install dependencies for C compilation, packet sniffing, and testing
 RUN apt-get update && apt-get install -y \
     libpcap-dev \
     gcc \
+    nmap \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -15,4 +16,4 @@ COPY . .
 RUN gcc -o sniffer sniffer.c -lpcap
 
 # Run the Python client
-CMD python3 client.py any
+CMD python3 client.py eth0
