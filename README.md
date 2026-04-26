@@ -12,7 +12,8 @@ SecureFlow is a containerized Intrusion Detection System (IDS). It is divided in
 To build, deploy, and demonstrate the vertical slice, run:
 ```bash
 make up
-make demo```
+make demo
+```
 
 ## 3. Demo Video
 **Demo Video:**
