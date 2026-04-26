@@ -1,0 +1,1 @@
+{"events": [{"event_type": "SYNTHETIC_ANOMALY", "signature": "NMAP_NULL_SCAN", "target_port": 80, "action": "ALERT_FORWARDED"}]}

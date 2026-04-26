@@ -40,6 +40,10 @@ def start_mtls_server():
                             
                             # Output JSON metric for grading rubric
                             metric = {"source": addr[0], "alert": payload, "hash": log_hash}
+                            
+                            # ADD THIS LINE: Force create the directory if it doesn't exist
+                            os.makedirs('/logs', exist_ok=True) 
+                            
                             with open('/logs/detection_metrics.json', 'a') as f:
                                 json.dump(metric, f)
                                 f.write('\n')
