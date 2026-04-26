@@ -14,6 +14,6 @@ To build, deploy, and demonstrate the vertical slice, run:
 make up
 make demo```
 
-## 3. Runbook
+## 3. Demo Video
 **Demo Video:**
 https://www.youtube.com/watch?v=UfvBcXVtYqQ
