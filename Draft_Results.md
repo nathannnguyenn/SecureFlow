@@ -24,11 +24,11 @@ Below is a preliminary table evaluating the C-sniffer's accuracy against differe
 
 | :--- | :--- | :--- | :--- | :--- |
 
-| Standard TCP Handshake | `curl` | Ignore | Ignored | ✅ Pass |
+| Standard TCP Handshake | `curl` | Ignore | Ignored | PASS |
 
-| NULL Scan (Flags 0x00) | `nmap -sN` | Alert Triggered | Alert Triggered | ✅ Pass |
+| NULL Scan (Flags 0x00) | `nmap -sN` | Alert Triggered | Alert Triggered | PASS |
 
-| Xmas Scan (FIN/PSH/URG)| `nmap -sX` | Alert Triggered | Alert Triggered | ✅ Pass |
+| Xmas Scan (FIN/PSH/URG)| `nmap -sX` | Alert Triggered | Alert Triggered | PASS |
 
 
 
