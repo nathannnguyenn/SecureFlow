@@ -13,3 +13,7 @@ To build, deploy, and demonstrate the vertical slice, run:
 ```bash
 make up
 make demo
+
+## 3. Runbook
+**Demo Video:**
+https://www.youtube.com/watch?v=UfvBcXVtYqQ
