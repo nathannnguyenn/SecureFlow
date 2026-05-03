@@ -29,3 +29,13 @@ test:
 
 down:
 	docker-compose down -v
+	
+clean: down
+	@echo "Cleaning up generated artifacts and temporary files..."
+	rm -rf artifacts/
+	# Use Docker to wipe certs without WSL permission denied errors
+	docker run --rm -v "$${PWD}:/app" -w /app ubuntu bash -c "rm -rf src/sensor/certs/* src/aggregator/certs/*"
+	# Remove Python and Pytest cache directories
+	rm -rf .pytest_cache .coverage
+	find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+	@echo "Clean complete."

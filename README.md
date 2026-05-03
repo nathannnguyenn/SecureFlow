@@ -18,3 +18,18 @@ make demo
 ## 3. Demo Video
 **Demo Video:**
 https://www.youtube.com/watch?v=UfvBcXVtYqQ
+
+## 4. Contribution Log & Code Ownership
+
+**Team Members:** Dominic Isaia & Nathan Nguyen
+
+### Contribution Log
+* **Dominic:** Engineered the automated `Makefile` extraction pipeline, resolved WSL2/Docker volume synchronization bugs, implemented the `os.makedirs` override for reliable JSON log generation, and authored the final system evaluation report.
+* **Nathan:** Configured the GitHub Actions CI/CD pipeline, developed the initial C-sniffer logic, generated the mTLS certificates, and wrote the Python client.
+
+### Code Ownership Map (Directory-Level)
+* `.github/workflows/` ➔ Nathan (CI/CD Pipeline)
+* `src/sensor/` ➔ Dominic (C-based Sniffer & Python mTLS Transmitter)
+* `src/aggregator/` ➔ Nathan (Python Log Aggregator & Hashing Logic)
+* `Makefile` & `docker-compose.yml` ➔ Dominic (Build Automation & Infrastructure)
+* `certs/` & `generate_certs.sh` ➔ Dominic (Cryptographic Foundations)
