@@ -1,1 +1,1 @@
-{"events": [{"event_type": "SYNTHETIC_ANOMALY", "signature": "NMAP_NULL_SCAN", "target_port": 80, "action": "ALERT_FORWARDED"}]}
+{"source": "172.21.0.3", "alert": "{\"alert\": \"NULL Scan Detected\", \"src_ip\": \"172.21.0.3\", \"dst_port\": 80, \"timestamp\": 1777905733}", "hash": "dfd18ca8cd0aac60992b71d593fc21ef79164a54cc7cf9240f650d11291ac1a0"}

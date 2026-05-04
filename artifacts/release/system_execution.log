@@ -1,4 +1,12 @@
 === AGGREGATOR KEY PROCESSING STEPS ===
 Aggregator listening on port 8443...
+[*] Incoming mTLS payload received from 172.21.0.3
+[*] Payload authenticated. Generating SHA-256 fingerprint...
+[+] HASH GENERATED: dfd18ca8cd0aac60992b71d593fc21ef79164a54cc7cf9240f650d11291ac1a0
+[*] Committing tamper-evident log to disk.
 
 === SENSOR KEY PROCESSING STEPS ===
+Connected to Aggregator via mTLS.
+[!] Anomaly Detected: NMAP_NULL_SCAN
+[*] Packaging payload and transmitting via mTLS tunnel...
+Securely transmitted: {"alert": "NULL Scan Detected", "src_ip": "172.21.0.3", "dst_port": 80, "timestamp": 1777905733}

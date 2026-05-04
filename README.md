@@ -17,7 +17,7 @@ make demo
 
 ## 3. Demo Video
 **Demo Video:**
-https://www.youtube.com/watch?v=UfvBcXVtYqQ
+https://youtu.be/55k-wm9wS5Q
 
 ## 4. Contribution Log & Code Ownership
 

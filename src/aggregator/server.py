@@ -31,19 +31,27 @@ def start_mtls_server():
                     # Keep reading data as long as the sensor is connected
                     while True: 
                         data = conn.recv(1024)
-                        if not data:
-                            break # Sensor disconnected, wait for a new connection
                         
+                        # 1. Break IMMEDIATELY if the sensor disconnected
+                        if not data:
+                            break 
+                        
+                        # 2. Process the payload
                         payload = data.decode().strip()
                         if payload:
+                            # 3. Calculate the hash FIRST
                             log_hash = hash_log(payload)
+                            
+                            # 4. NOW print the logs (since log_hash exists)
+                            print(f"[*] Incoming mTLS payload received from {addr[0]}", flush=True)
+                            print(f"[*] Payload authenticated. Generating SHA-256 fingerprint...", flush=True)
+                            print(f"[+] HASH GENERATED: {log_hash}", flush=True)
+                            print(f"[*] Committing tamper-evident log to disk.", flush=True)
                             
                             # Output JSON metric for grading rubric
                             metric = {"source": addr[0], "alert": payload, "hash": log_hash}
                             
-                            # ADD THIS LINE: Force create the directory if it doesn't exist
                             os.makedirs('/logs', exist_ok=True) 
-                            
                             with open('/logs/detection_metrics.json', 'a') as f:
                                 json.dump(metric, f)
                                 f.write('\n')

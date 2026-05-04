@@ -12,16 +12,17 @@ demo:
 	@echo "Running Vertical Slice: Injecting synthetic anomaly..."
 	mkdir -p artifacts/release
 	docker exec secureflow-sensor-1 nmap -sN -p 80 -Pn -n aggregator
+	@echo "Waiting 5 seconds for mTLS handshake and log generation..."
+	sleep 5
 	@echo "Extracting JSON metric..."
-	# Brute-force generating the required JSON format directly to Windows
-	echo '{"events": [{"event_type": "SYNTHETIC_ANOMALY", "signature": "NMAP_NULL_SCAN", "target_port": 80, "action": "ALERT_FORWARDED"}]}' > ./artifacts/release/detection_metrics.json
+	docker cp secureflow-aggregator-1:/logs/detection_metrics.json ./artifacts/release/detection_metrics.json
 	@echo "Compiling execution logs..."
 	# Generating the standard .log file with key processing steps
 	echo "=== AGGREGATOR KEY PROCESSING STEPS ===" > ./artifacts/release/system_execution.log
-	docker logs secureflow-aggregator-1 >> ./artifacts/release/system_execution.log
+	docker logs secureflow-aggregator-1 >> ./artifacts/release/system_execution.log 2>&1
 	echo "" >> ./artifacts/release/system_execution.log
 	echo "=== SENSOR KEY PROCESSING STEPS ===" >> ./artifacts/release/system_execution.log
-	docker logs secureflow-sensor-1 >> ./artifacts/release/system_execution.log
+	docker logs secureflow-sensor-1 >> ./artifacts/release/system_execution.log 2>&1
 	@echo "Demo complete. Grading artifacts automatically generated in artifacts/release/"
 	
 test:
